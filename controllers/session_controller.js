@@ -16,6 +16,8 @@ exports.create = function(req, res){
             return;
         }
         req.session.user = {id:user.id, username:user.username};
+        var ahora = new Date();
+        req.session.exptime = ahora.getTime() + 120000;
         res.redirect(req.session.redir.toString());
     });
 };

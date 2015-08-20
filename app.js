@@ -34,6 +34,20 @@ app.use(function(req, res, next){
     next();
 });
 
+app.use(function(req,res,next){
+    if(req.session.user){
+        var ahora = new Date();
+        ahorams = ahora.getTime();
+        if(Number(ahorams) > Number(req.session.exptime)){
+            console.log("Tiempo expirado.");
+            delete req.session.user;
+        } else {
+            console.log("Dentro de tiempo.");
+            req.session.exptime = ahorams + 120000;
+        }
+    }
+    next();
+});
 
 app.use('/', routes);
 
